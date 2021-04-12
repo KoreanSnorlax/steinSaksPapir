@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset = "utf-8"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <title>Rock Paper Scissors</title>
+    <style>
+        body{
+            background-color: #018281;
+            margin:0;
+            padding:0;
+        }
+
+        button{
+            font-family: 'VT323', monospace;
+        }
+
+        .sspKnapper {
+            position: relative;
+            top: 61px;
+            left: 352px;
+            margin: 7px;
+        }
+        .inlineDiv{
+            display: inline-block;
+        }
+        .sspCpuKnapper {
+            position: relative;
+            top: 15vh;
+            right: 5vw;
+            float: right;
+        }
+
+        #steinSaksPapir {
+            width: 492px;
+            height: 279px;
+            background-image: url(RPSUI2.png);
+        }
+
+        .resultatDiv {
+            width: 150px;
+            height: 600px;
+            background-color: white; 
+            border: 5px solid black;
+            font-family: 'VT323', monospace;
+            text-align: center;
+        }
+
+        .posSteinSaksPapirDiv {
+            position: absolute;
+            left: 5vw;
+            top: 15vh;
+        }
+
+        .posResultDiv {
+            position: absolute;
+            right: 3vw;
+            top: 30vh;
+        }
+
+        hr {
+            height: 5px;
+            background: black;
+            top: 320px;
+            margin-bottom: 20px;
+            padding: 0;
+        }
+        #playerDiv{
+            position: relative; 
+            top: 5px;
+            left: 50px;
+            width: fit-content;
+        }
+        #cpuDiv{
+            float: right;
+            position: relative;
+            top: -105px;
+            right: 180px;
+        }
+        .knappKnapp{
+            text-decoration: none;
+            background: none;
+            border: none;
+            width: 114px;
+            height: 23px;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script>
+
+        //model
+        var mittValg = "";
+        var cpuValg = "";
+
+
+        //view
+        show();
+        function show(){    
+        document.getElementById("app").innerHTML = `
+            <div id="container">
+                
+                <div id="steinSaksPapir" class="posSteinSaksPapirDiv">
+
+                    <div id="stein" class="sspKnapper">
+                        <button id="buttonStein" class="knappKnapp"onClick="displayPlayer(this)">Stein</button>
+                        <!-- <img src="stein.png" alt="Bilde ikke funnet" width="100px" height="100px"> -->    
+                    </div>
+
+                    <div id="saks" class="sspKnapper">
+                        <button id="buttonSaks" class="knappKnapp" onClick="displayPlayer(this)">Saks</button>
+                        <!-- <img src="saks.png" alt="Bilde ikke funnet" width="100px" height="100px"> -->   
+                    </div>
+                
+                    <div id="papir" class="sspKnapper">
+                        <button id="buttonPapir" class="knappKnapp" onClick="displayPlayer(this)">Papir</button>
+                        <!-- <img src="papir.png" alt="Bilde ikke funnet" width="100px" height="100px"> -->   
+                    </div>
+
+                    <div id="playerDiv"></div>
+                    <div id="cpuDiv" class="inlineDiv"></div>
+                </div>
+
+                <div id="resultater" class="resultatDiv posResultDiv">
+                    <h1> Resultater </h1><hr>
+                    <p> Resultater:<p>
+                </div>
+                
+            </div>
+
+        `;
+        }
+        
+        function displayPlayer(that){
+            show();
+            mittValg = that.innerHTML;
+            document.getElementById('playerDiv').innerHTML += `
+                    <div id="playerChoice" class="inlineDiv">
+                        <img src="${mittValg}.png" alt="Bilde ikke funnet" width="100px" height="100px">    
+                    </div>
+            `;
+            displayCpu();
+            sjekkResultat();
+        }
+        
+        function displayCpu(){
+            cpuValg = getRandom();
+            document.getElementById('cpuDiv').innerHTML += `
+                    <div id="cpuChoice" class="inlineDiv">
+                        <img src="${cpuValg}.png" alt="Bilde ikke funnet" width="100px" height="100px">    
+                    </div>
+            `;
+        }
+
+        //controller
+        function getRandom() {
+            var randNum = Math.floor(Math.random()*3);
+            var arr = ['Saks','Stein','Papir'];
+            var randomCpuMove = arr[randNum]; 
+            return randomCpuMove;
+        }
+
+        function sjekkResultat(){
+            console.log(mittValg);
+            console.log(cpuValg);
+            if (mittValg == cpuValg){
+                document.getElementById("resultater").innerHTML += "<p>Uavgjort!</p>";
+            } 
+            else if (mittValg === "Stein"){
+              if (cpuValg == "Papir"){
+                  document.getElementById("resultater").innerHTML += "<p>Du Tapte!</p>";
+
+              }
+              else{
+                document.getElementById("resultater").innerHTML += "<p>Du vinner!</p>";  
+              }  
+            }
+            else if (mittValg === "Papir"){
+              if (cpuValg == "Saks"){
+                  document.getElementById("resultater").innerHTML += "<p>Du Tapte!</p>";
+
+              }
+              else{
+                document.getElementById("resultater").innerHTML += "<p>Du vinner!</p>";  
+              }  
+            }
+            else if (mittValg === "Saks"){
+              if (cpuValg == "Stein"){
+                  document.getElementById("resultater").innerHTML += "<p>Du Tapte!</p>";
+
+              }
+              else{
+                document.getElementById("resultater").innerHTML += "<p>Du vinner!</p>";  
+              }  
+            }
+        }
+        
+
+    </script>
+</body>
+</html>
